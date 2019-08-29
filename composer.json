@@ -1,12 +1,12 @@
 {
-  "name": "mauretto78/whole-text-searcher",
+  "name": "mauretto78/whole-text-finder",
   "type": "library",
-  "description": "A simple whole text searcher written in PHP",
+  "description": "A simple whole text finder written in PHP",
   "keywords": ["text", "search", "php"],
-  "homepage": "https://github.com/mauretto78/whole-text-searcher",
+  "homepage": "https://github.com/mauretto78/whole-text-finder",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/mauretto78/whole-text-searcher/issues"
+    "issues": "https://github.com/mauretto78/whole-text-finder/issues"
   },
   "authors": [
     {
@@ -17,11 +17,11 @@
   ],
   "autoload": {
     "psr-4": {
-      "Searcher\\": "src/"
+      "Finder\\": "src/"
     }
   },
   "autoload-dev": {
-    "psr-4": { "Searcher\\Tests\\": "tests/" }
+    "psr-4": { "Finder\\Tests\\": "tests/" }
   },
   "require": {
     "php": ">=5.5"

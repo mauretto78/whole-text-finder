@@ -1,26 +1,30 @@
 <?php
 
-namespace Searcher\Tests;
+namespace Finder\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Searcher\WholeTextSearcher;
+use Finder\WholeTextFinder;
 
-class WholeTextSearcherTest extends TestCase
+class WholeTextFinderTest extends TestCase
 {
     /**
      * @test
      */
     public function search_in_texts()
     {
-        $haystack  = "PHP PHP is the web scripting PHP language of choice.";
+        $haystack  = "PHP PHP is the #1 web scripting PHP language of choice.";
 
         $needle = "php";
-        $matches = WholeTextSearcher::find($haystack, $needle);
+        $matches = WholeTextFinder::find($haystack, $needle);
         $this->assertCount(3, $matches);
 
         $needle = "php";
-        $matches = WholeTextSearcher::find($haystack, $needle, true,true, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
         $this->assertCount(0, $matches);
+
+        $needle = "#1";
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(1, $matches);
     }
 
     /**
@@ -31,45 +35,45 @@ class WholeTextSearcherTest extends TestCase
         $haystack  = "&lt;a href='##'/&gt;This is a string&lt;/a&gt; with HTML entities;&#13;&#13;They must be skipped!";
 
         $needle = "&";
-        $matches = WholeTextSearcher::find($haystack, $needle, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true);
         $this->assertCount(0, $matches);
 
         $needle = ";";
-        $matches = WholeTextSearcher::find($haystack, $needle, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true);
         $this->assertCount(1, $matches);
 
         $needle = "&lt;a";
-        $matches = WholeTextSearcher::find($haystack, $needle, false);
+        $matches = WholeTextFinder::find($haystack, $needle, false);
         $this->assertCount(1, $matches);
 
         $needle = "<a";
-        $matches = WholeTextSearcher::find($haystack, $needle, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true);
         $this->assertCount(1, $matches);
 
         $needle = "<A";
-        $matches = WholeTextSearcher::find($haystack, $needle, true, false, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true, false, true);
         $this->assertCount(0, $matches);
 
         $needle = "<a";
-        $matches = WholeTextSearcher::find($haystack, $needle, true, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
         $this->assertCount(1, $matches);
 
         $haystack  = "&quot;This is a quotation&quot; - says the donkey.";
 
         $needle = "quot";
-        $matches = WholeTextSearcher::find($haystack, $needle, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true);
         $this->assertCount(1, $matches);
-        $matches = WholeTextSearcher::find($haystack, $needle, true, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
         $this->assertCount(0, $matches);
 
         $needle = ";";
-        $matches = WholeTextSearcher::find($haystack, $needle, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true);
         $this->assertCount(0, $matches);
 
         $haystack  = "&quot;This is a quotation&quot; - says the donkey.";
 
         $needle = "&quot;";
-        $matches = WholeTextSearcher::find($haystack, $needle, false);
+        $matches = WholeTextFinder::find($haystack, $needle, false);
         $this->assertCount(2, $matches);
     }
 
@@ -81,7 +85,12 @@ class WholeTextSearcherTest extends TestCase
         $haystack = '「ハッスルの日」開催について';
         $needle = "ハッスルの日";
 
-        $matches = WholeTextSearcher::find($haystack, $needle, true, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(1, $matches);
+
+        $needle = "開催について";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
         $this->assertCount(1, $matches);
     }
 
@@ -93,7 +102,7 @@ class WholeTextSearcherTest extends TestCase
         $haystack = '. سعدت بلقائك.';
         $needle = "سعدت";
 
-        $matches = WholeTextSearcher::find($haystack, $needle, true, true);
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
         $this->assertCount(1, $matches);
     }
 }

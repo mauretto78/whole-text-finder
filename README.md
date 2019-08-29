@@ -1,12 +1,72 @@
-# WholeTextSearcher
+# WholeTextFinder
 
-**WholeTextSearcher** is a simple Dependency Injection Container(DIC).
+**WholeTextFinder** is a simple whole text finder.
 
 ## Basic Usage
 
+Use the `find` method. Here is a basic search:
+
+```php
+//..
+use Finder\WholeTextFinder;
+
+$haystack  = "PHP PHP is the #1 web scripting PHP language of choice.";
+$needle = "php";
+
+// 3 matches
+$matches = WholeTextFinder::find($haystack, $needle);
+
+// $matches will be:
+//
+// array(3) {
+//    [0] =>
+//  array(2) {
+//            [0] =>
+//    string(3) "PHP"
+//            [1] =>
+//    int(0)
+//  }
+//  [1] =>
+//  array(2) {
+//            [0] =>
+//    string(3) "PHP"
+//            [1] =>
+//    int(4)
+//  }
+//  [2] =>
+//  array(2) {
+//            [0] =>
+//    string(3) "PHP"
+//            [1] =>
+//    int(51)
+//  }
+// }
+
+```
+
+You can also specify three options:
+
+* $skipHtmlEntities (`true` by default)
+* $exactMatch (`false` by default)
+* $caseSensitive (`false` by default)
+
+```php
+//..
+use Finder\WholeTextFinder;
+
+// 0 matches
+$needle = "php";
+$matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+   
+// 1 match 
+$needle = "#1";
+$matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+   
+```
+
 ## Support
 
-If you found an issue or had an idea please refer [to this section](https://github.com/mauretto78/simple-dic/issues).
+If you found an issue or had an idea please refer [to this section](https://github.com/mauretto78/whole-text-finder/issues).
 
 ## Authors
 
