@@ -1,0 +1,34 @@
+{
+  "name": "mauretto78/whole-text-searcher",
+  "type": "library",
+  "description": "A simple whole text searcher written in PHP",
+  "keywords": ["text", "search", "php"],
+  "homepage": "https://github.com/mauretto78/whole-text-searcher",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/mauretto78/whole-text-searcher/issues"
+  },
+  "authors": [
+    {
+      "name": "Mauro Cassani",
+      "email": "maurocassani1978@gmail.com",
+      "homepage": "https://github.com/mauretto78"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Searcher\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": { "Searcher\\Tests\\": "tests/" }
+  },
+  "require": {
+    "php": ">=5.5"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.2",
+    "phpstan/phpstan": "^0.11.12",
+    "friendsofphp/php-cs-fixer": "^2.15"
+  }
+}
