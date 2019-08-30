@@ -2,8 +2,6 @@
 
 namespace Finder;
 
-use function Emoji\detect_emoji;
-
 class StringEscaper
 {
     /**
@@ -56,27 +54,7 @@ class StringEscaper
      */
     public static function escape($string)
     {
-        $string = self::encodeEmojis($string);
-
-        return str_replace(array_keys(self::$_ESCAPING_MAP), self::$_ESCAPING_MAP, $string);
-    }
-
-    /**
-     * @param $string
-     *
-     * @return string mixed
-     */
-    private static function encodeEmojis($string)
-    {
-        $emoji = detect_emoji($string);
-
-        if( count($emoji) > 0){
-            foreach ($emoji as $e){
-                $string = str_replace($e['emoji'], '&#x'.$e['hex_str'].';', $string);
-            }
-        }
-
-        return $string;
+        return str_replace(array_keys(self::$_ESCAPING_MAP), self::$_ESCAPING_MAP, self::escapeNotBoundaries($string));
     }
 
     /**
@@ -84,8 +62,17 @@ class StringEscaper
      *
      * @return string
      */
-    public static function unescape($string)
+    private static function escapeNotBoundaries($string)
     {
-        return html_entity_decode(str_replace(array_values(self::$_ESCAPING_MAP), array_keys(self::$_ESCAPING_MAP), $string));
+        preg_match_all('/[^\w+\s「」]/u', $string, $notBoundaryMatches, PREG_OFFSET_CAPTURE);
+
+        foreach ($notBoundaryMatches[0] as $match){
+            // exclude = from escaping because is used by base64_encode function
+            if( $match[0] !== '=' ){
+                $string = str_replace($match[0], base64_encode($match[0]), $string);
+            }
+        }
+
+        return $string;
     }
 }

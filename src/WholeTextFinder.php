@@ -23,7 +23,7 @@ class WholeTextFinder
 
         preg_match_all($pattern, StringEscaper::escape($haystack), $matches, PREG_OFFSET_CAPTURE);
 
-        return self::unescapeMatches($matches[ 0 ]);
+        return self::unescapeMatches($matches[0], $needle);
     }
 
     /**
@@ -66,13 +66,13 @@ class WholeTextFinder
      *
      * @return array
      */
-    private static function unescapeMatches($matches)
+    private static function unescapeMatches($matches, $needle)
     {
         $unescapeMatches = [];
 
         foreach ($matches as $index => $match) {
             $unescapeMatches[$index] = [
-                StringEscaper::unescape($match[0]),
+                $needle,
                 $match[1],
             ];
         }

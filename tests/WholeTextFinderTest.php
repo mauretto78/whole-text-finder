@@ -2,6 +2,7 @@
 
 namespace Finder\Tests;
 
+use Finder\StringEscaper;
 use PHPUnit\Framework\TestCase;
 use Finder\WholeTextFinder;
 
@@ -106,7 +107,7 @@ class WholeTextFinderTest extends TestCase
     public function search_in_texts_with_arabic_words()
     {
         $haystack = '. سعدت بلقائك.';
-        $needle = "سعدت";
+        $needle = ". سعدت";
 
         $matches = WholeTextFinder::find($haystack, $needle, true, true);
         $this->assertCount(1, $matches);

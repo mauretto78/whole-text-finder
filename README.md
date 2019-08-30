@@ -54,6 +54,8 @@ You can also specify three options:
 //..
 use Finder\WholeTextFinder;
 
+$haystack  = "PHP PHP is the #1 web scripting PHP language of choice.";
+
 // 0 matches
 $needle = "php";
 $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
