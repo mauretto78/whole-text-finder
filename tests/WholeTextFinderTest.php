@@ -12,6 +12,12 @@ class WholeTextFinderTest extends TestCase
      */
     public function search_in_texts()
     {
+        $haystack  = "PHP é il linguaggio numero 1 del mondo.";
+
+        $needle = "é";
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(1, $matches);
+
         $haystack  = "PHP PHP is the #1 web scripting PHP language of choice.";
 
         $needle = "php";

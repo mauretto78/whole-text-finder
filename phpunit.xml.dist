@@ -12,7 +12,7 @@
          beStrictAboutTestsThatDoNotTestAnything="true">
 
     <testsuites>
-        <testsuite name="Simple S3 ClientTest Suite">
+        <testsuite name="Whole Text Finder Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
