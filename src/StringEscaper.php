@@ -41,7 +41,6 @@ class StringEscaper
         '-'  => 'K5qqZgbeuVNxsJCqzRsE',
         ','  => 'VN5CsylH1PYDuixqavg0',
         '&'  => 'xc1MGvW39dqgx5LE6Lnw',
-        ' '  => '8WQncHgwHWGfzaGLo5f9',
         '£'  => 'tJdPyUJ9WmebmRUsUr2o',
         '¥'  => '6WcUBGKHwcM5pdyFtnf5',
         '¢'  => 'D9RPKaXHe9Km9R4ixqLI',

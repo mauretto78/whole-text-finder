@@ -32,6 +32,18 @@ class WholeTextFinderTest extends TestCase
         $needle = "#1";
         $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
         $this->assertCount(1, $matches);
+
+        $haystack  = "Lawful basis for processing including basis of legitimate interest";
+
+        $needle = "including";
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(1, $matches);
+
+        $haystack  = "To process and deliver your order including: (a) Manage payments, fees and charges (b) Collect and recover money owed to us";
+
+        $needle = "including:";
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(1, $matches);
     }
 
     /**
