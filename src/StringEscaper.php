@@ -66,9 +66,9 @@ class StringEscaper
     {
         preg_match_all('/[^\w+\s「」]/u', $string, $notBoundaryMatches, PREG_OFFSET_CAPTURE);
 
-        foreach ($notBoundaryMatches[0] as $match){
+        foreach ($notBoundaryMatches[0] as $match) {
             // exclude = from escaping because is used by base64_encode function
-            if( $match[0] !== '=' ){
+            if ($match[0] !== '=') {
                 $string = str_replace($match[0], base64_encode($match[0]), $string);
             }
         }
