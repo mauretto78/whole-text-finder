@@ -1,5 +1,7 @@
 # WholeTextFinder
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/88c3e7517a2b46c59e9a0cc75856433e)](https://app.codacy.com/app/mauretto78_2/whole-text-finder?utm_source=github.com&utm_medium=referral&utm_content=mauretto78/whole-text-finder&utm_campaign=Badge_Grade_Settings)
+
 **WholeTextFinder** is a simple whole text finder.
 
 ## Basic Usage
