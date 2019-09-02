@@ -13,7 +13,7 @@ class StringEscaper
 
     /**
      * Used to encode base64 converted chars
-     * Ex: "@" is encoded as QA==
+     * Ex: "@" is encoded as QA==, and then QA== is encoded to QA4g5nlcR44g5nlcR4
      *
      * @var array
      */
@@ -78,7 +78,7 @@ class StringEscaper
         //
         $unescapeMap = [];
 
-        foreach ($matches[0] as $k => $item){
+        foreach ($matches[0] as $k => $item) {
             $unescapeMap[$item[0]] = base64_decode($matches[1][$k][0]);
         }
 

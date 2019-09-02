@@ -13,7 +13,7 @@ class WholeTextFinder
      *
      * @return array
      */
-    public static function find( $originalHaystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
+    public static function find($originalHaystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
     {
         $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive);
 
