@@ -5,7 +5,7 @@ namespace Finder;
 class WholeTextFinder
 {
     /**
-     * @param string $haystack
+     * @param string $originalHaystack
      * @param string $needle
      * @param bool   $skipHtmlEntities
      * @param bool   $exactMatch
@@ -13,17 +13,19 @@ class WholeTextFinder
      *
      * @return array
      */
-    public static function find($haystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
+    public static function find( $originalHaystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
     {
         $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive);
 
         if ($skipHtmlEntities) {
-            $haystack = html_entity_decode($haystack, ENT_COMPAT, 'UTF-8');
+            $originalHaystack = html_entity_decode($originalHaystack, ENT_COMPAT, 'UTF-8');
         }
 
-        preg_match_all($pattern, StringEscaper::escape($haystack), $matches, PREG_OFFSET_CAPTURE);
+        $haystack = ($exactMatch)  ? StringEscaper::escape($originalHaystack) : $originalHaystack;
 
-        return self::unescapeMatches($matches[0], $needle);
+        preg_match_all($pattern, $haystack, $matches, PREG_OFFSET_CAPTURE);
+
+        return self::unescapeMatches($matches[0], $needle, $haystack);
     }
 
     /**
@@ -37,43 +39,40 @@ class WholeTextFinder
     private static function getSearchPattern($needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
     {
         $pattern = '/';
-
-        if ($exactMatch) {
-            $pattern .= '\b';
-        }
-
-        $pattern .= StringEscaper::escape($needle);
-
-        if ($exactMatch) {
-            $pattern .= '\b';
-        }
-
+        $pattern .= ($exactMatch) ? '\b' : '';
+        $pattern .= ($exactMatch) ? StringEscaper::escape($needle) : $needle;
+        $pattern .= ($exactMatch) ? '\b' : '';
         $pattern .= '/';
-
-        if (false === $caseSensitive) {
-            $pattern .= 'i';
-        }
-
-        if ($skipHtmlEntities) {
-            $pattern .= 'u';
-        }
+        $pattern .= (false === $caseSensitive) ? 'i' : '';
+        $pattern .= ($skipHtmlEntities) ? 'u' : '';
 
         return $pattern;
     }
 
     /**
-     * @param array $matches
+     * @param array  $matches
+     * @param string $needle
+     * @param string $haystack
      *
      * @return array
      */
-    private static function unescapeMatches($matches, $needle)
+    private static function unescapeMatches($matches, $needle, $haystack)
     {
         $unescapeMatches = [];
 
         foreach ($matches as $index => $match) {
+
+            // calculate the position in the original string
+            $position = $match[1];
+            $substring = substr($haystack, 0, $position);
+            $originalSubstring = StringEscaper::unescape($substring);
+
+            $posDiff = mb_strlen($substring) - mb_strlen($originalSubstring);
+            $originalPosition = ($position - $posDiff);
+
             $unescapeMatches[$index] = [
                 $needle,
-                $match[1],
+                $originalPosition,
             ];
         }
 

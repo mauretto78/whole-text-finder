@@ -5,9 +5,42 @@ namespace Finder\Tests;
 use Finder\StringEscaper;
 use PHPUnit\Framework\TestCase;
 use Finder\WholeTextFinder;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class WholeTextFinderTest extends TestCase
 {
+    /**
+     * @test
+     */
+    public function find_should_return_correct_matches()
+    {
+        $haystack  = "PHP é il @ linguaggio ggio #1 del mondo.";
+        $needle = "ggio";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $matches2 = WholeTextFinder::find($haystack, $needle, true, false, true);
+
+        $expected = [
+            [
+                0 => 'ggio',
+                1 => 23
+            ]
+        ];
+        $expected2 = [
+            [
+                0 => 'ggio',
+                1 => 18
+            ],
+            [
+                0 => 'ggio',
+                1 => 23
+            ]
+        ];
+
+        $this->assertEquals($expected, $matches);
+        $this->assertEquals($expected2, $matches2);
+    }
+
     /**
      * @test
      */
