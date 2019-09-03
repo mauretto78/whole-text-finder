@@ -58,7 +58,6 @@ class WholeTextFinder
         $unescapeMatches = [];
 
         foreach ($matches as $index => $match) {
-
             $position = $match[1]; // position in the encoded string
             $substring = substr($haystack, 0, $position);
             $originalSubstring = StringEscaper::unescape($substring);
