@@ -17,11 +17,8 @@ class WholeTextFinder
     {
         $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive);
 
-        if ($skipHtmlEntities) {
-            $originalHaystack = html_entity_decode($originalHaystack, ENT_COMPAT, 'UTF-8');
-        }
-
-        $haystack = ($exactMatch)  ? StringEscaper::escape($originalHaystack) : $originalHaystack;
+        $haystack = ($skipHtmlEntities) ? html_entity_decode($originalHaystack, ENT_COMPAT, 'UTF-8') : $originalHaystack;
+        $haystack = ($exactMatch) ? StringEscaper::escape($haystack) : $haystack;
 
         preg_match_all($pattern, $haystack, $matches, PREG_OFFSET_CAPTURE);
 
@@ -62,13 +59,12 @@ class WholeTextFinder
 
         foreach ($matches as $index => $match) {
 
-            // calculate the position in the original string
-            $position = $match[1];
+            $position = $match[1]; // position in the encoded string
             $substring = substr($haystack, 0, $position);
             $originalSubstring = StringEscaper::unescape($substring);
 
             $posDiff = mb_strlen($substring) - mb_strlen($originalSubstring);
-            $originalPosition = ($position - $posDiff);
+            $originalPosition = ($position - $posDiff); // calculate the position in the original string
 
             $unescapeMatches[$index] = [
                 $needle,
