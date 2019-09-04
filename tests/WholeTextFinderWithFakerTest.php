@@ -1,10 +1,10 @@
 <?php
 
-namespace Finder\Tests;
+namespace Matecat\Finder\Tests;
 
 use Faker\Factory;
+use Matecat\Finder\WholeTextFinder;
 use PHPUnit\Framework\TestCase;
-use Finder\WholeTextFinder;
 
 class WholeTextFinderWithFakerTest extends TestCase
 {

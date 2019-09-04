@@ -1,11 +1,9 @@
 <?php
 
-namespace Finder\Tests;
+namespace Matecat\Finder\Tests;
 
-use Finder\StringEscaper;
+use Matecat\Finder\WholeTextFinder;
 use PHPUnit\Framework\TestCase;
-use Finder\WholeTextFinder;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class WholeTextFinderTest extends TestCase
 {
@@ -47,6 +45,14 @@ class WholeTextFinderTest extends TestCase
     public function search_in_texts()
     {
         $haystack  = "PHP é il linguaggio numero 1 del mondo.";
+
+        $needle = "mondo";
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(1, $matches);
+
+        $needle = "mondo.";
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(1, $matches);
 
         $needle = "é";
         $matches = WholeTextFinder::find($haystack, $needle, true, true, true);

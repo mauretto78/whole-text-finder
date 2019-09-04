@@ -1,12 +1,12 @@
 {
-  "name": "mauretto78/whole-text-finder",
+  "name": "matecat/whole-text-finder",
   "type": "library",
   "description": "A simple whole text finder written in PHP",
   "keywords": ["text", "search", "php"],
-  "homepage": "https://github.com/mauretto78/whole-text-finder",
+  "homepage": "https://github.com/matecat/whole-text-finder",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/mauretto78/whole-text-finder/issues"
+    "issues": "https://github.com/matecat/whole-text-finder/issues"
   },
   "authors": [
     {
@@ -17,11 +17,11 @@
   ],
   "autoload": {
     "psr-4": {
-      "Finder\\": "src/"
+      "Matecat\\Finder\\": "src/"
     }
   },
   "autoload-dev": {
-    "psr-4": { "Finder\\Tests\\": "tests/" }
+    "psr-4": { "Matecat\\Finder\\Tests\\": "tests/" }
   },
   "require": {
     "php": ">=5.5"
