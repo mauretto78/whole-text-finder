@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class WholeTextFinderTest extends TestCase
 {
-    // 21/06/2019 bisogna escapare sempre!
     /**
      * @test
      */
