@@ -7,6 +7,21 @@ use PHPUnit\Framework\TestCase;
 
 class WholeTextFinderTest extends TestCase
 {
+    // Lawful basis for processing including basis of legitimate interest   da $results
+
+    /**
+     * @test
+     */
+    public function dasdsadsa()
+    {
+        $haystackWithNbsp  = "Lawful basis for processing including basis of legitimate interest";
+        $needleWithoutNbsp = "Lawful basis for processing including basis of legitimate interest";
+
+        $matches = WholeTextFinder::find($haystackWithNbsp, $needleWithoutNbsp, true, true, true);
+
+        $this->assertCount(1, $matches);
+    }
+
     /**
      * @test
      */

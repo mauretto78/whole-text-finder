@@ -10,13 +10,15 @@ class WholeTextFinder
      * @param bool   $skipHtmlEntities
      * @param bool   $exactMatch
      * @param bool   $caseSensitive
+     * @param bool   $preserveNbsps
      *
      * @return array
      */
-    public static function find($originalHaystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
+    public static function find( $originalHaystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
     {
-        $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive);
+        $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps);
         $haystack = ($skipHtmlEntities) ? html_entity_decode($originalHaystack, ENT_COMPAT, 'UTF-8') : $originalHaystack;
+        $haystack = (false === $preserveNbsps) ? self::cutNbsps($haystack) : $haystack;
 
         preg_match_all($pattern, $haystack, $matches, PREG_OFFSET_CAPTURE);
 
@@ -28,11 +30,14 @@ class WholeTextFinder
      * @param bool   $skipHtmlEntities
      * @param bool   $exactMatch
      * @param bool   $caseSensitive
+     * @param bool   $preserveNbsps
      *
      * @return string
      */
-    private static function getSearchPattern($needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false)
+    private static function getSearchPattern( $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
     {
+        $needle = (false === $preserveNbsps) ? self::cutNbsps($needle) : $needle;
+
         $pattern = '/';
         $pattern .= ($exactMatch) ? WholeTextRegexEscaper::obtain($needle) : $needle;
         $pattern .= '/';
@@ -40,5 +45,15 @@ class WholeTextFinder
         $pattern .= ($skipHtmlEntities) ? 'u' : '';
 
         return $pattern;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    private static function cutNbsps($string)
+    {
+        return str_replace( ['&nbsp;', ' '], ' ', $string);
     }
 }
