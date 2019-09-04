@@ -7,12 +7,24 @@ use PHPUnit\Framework\TestCase;
 
 class WholeTextFinderTest extends TestCase
 {
-    // Lawful basis for processing including basis of legitimate interest   da $results
+    // 21/06/2019 bisogna escapare sempre!
+    /**
+     * @test
+     */
+    public function search_in_texts_with_dates()
+    {
+        $haystackWithDate  = "21/06/2019";
+        $needleWithDate = "21/06/2019";
+
+        $matches = WholeTextFinder::find($haystackWithDate, $needleWithDate, true, false, true);
+
+        $this->assertCount(1, $matches);
+    }
 
     /**
      * @test
      */
-    public function dasdsadsa()
+    public function search_in_texts_with_nbsps()
     {
         $haystackWithNbsp  = "Lawful basis for processing including basis of legitimate interest";
         $needleWithoutNbsp = "Lawful basis for processing including basis of legitimate interest";

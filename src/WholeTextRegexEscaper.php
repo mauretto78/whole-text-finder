@@ -9,7 +9,7 @@ class WholeTextRegexEscaper
      *
      * @return string
      */
-    public static function obtain($needle)
+    public static function escapeWholeTextPattern($needle)
     {
         $escapedNeedle = preg_quote($needle);
         $escapedNeedle = str_replace("/", "\/", $escapedNeedle);
@@ -72,5 +72,15 @@ class WholeTextRegexEscaper
     private static function isBoundary($letter)
     {
         return ( preg_match("/[A-Za-z0-9_]/", $letter) > 0 ) ? true : false;
+    }
+
+    /**
+     * @param string $needle
+     *
+     * @return string
+     */
+    public static function escapeRegularPattern($needle)
+    {
+        return str_replace("/", "\/", $needle);
     }
 }

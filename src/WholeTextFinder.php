@@ -39,7 +39,7 @@ class WholeTextFinder
         $needle = (false === $preserveNbsps) ? self::cutNbsps($needle) : $needle;
 
         $pattern = '/';
-        $pattern .= ($exactMatch) ? WholeTextRegexEscaper::obtain($needle) : $needle;
+        $pattern .= ($exactMatch) ? WholeTextRegexEscaper::escapeWholeTextPattern($needle) : WholeTextRegexEscaper::escapeRegularPattern($needle);
         $pattern .= '/';
         $pattern .= (false === $caseSensitive) ? 'i' : '';
         $pattern .= ($skipHtmlEntities) ? 'u' : '';
