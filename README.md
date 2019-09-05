@@ -72,6 +72,11 @@ $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
 // 1 match 
 $needle = "#1";
 $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+
+// 1 match, even if the haystack contains an invisible nbsp and the needle has an ordinary spacer
+$haystackWithNbsp  = "Lawful basis for processing including basis of legitimate interest";
+$needleWithoutNbsp = "Lawful basis for processing including basis of legitimate interest";
+$matches = WholeTextFinder::find($haystackWithNbsp, $needleWithoutNbsp, true, true, true);
    
 ```
 
