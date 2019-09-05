@@ -48,12 +48,16 @@ $matches = WholeTextFinder::find($haystack, $needle);
 
 ```
 
-You can also specify four options:
+## Search options
 
-* $skipHtmlEntities (`true` by default)
-* $exactMatch (`false` by default)
-* $caseSensitive (`false` by default)
-* $preserveNbsps (`false` by default)
+Some options are avaliable:
+
+* **$skipHtmlEntities** (`true` by default)  
+* **$exactMatch** (`false` by default) 
+* **$caseSensitive** (`false` by default) 
+* **$preserveNbsps** (`false` by default) 
+
+Here are some examples:
 
 ```php
 //..
