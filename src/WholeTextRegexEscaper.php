@@ -12,7 +12,7 @@ class WholeTextRegexEscaper
     public static function escapeWholeTextPattern($needle)
     {
         $escapedNeedle = preg_quote($needle);
-        $escapedNeedle = str_replace("/", "\/", $escapedNeedle);
+        $escapedNeedle = self::escapeRegularPattern($escapedNeedle);
         $splittedNeedle = mb_str_split($escapedNeedle);
 
         $final = '';
