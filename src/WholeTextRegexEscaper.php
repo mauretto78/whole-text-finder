@@ -71,7 +71,7 @@ class WholeTextRegexEscaper
      */
     private static function isBoundary($letter)
     {
-        return ( preg_match("/[A-Za-z0-9_]/", $letter) > 0 ) ? true : false;
+        return (preg_match("/[A-Za-z0-9_]/", $letter) > 0) ? true : false;
     }
 
     /**

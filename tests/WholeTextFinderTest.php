@@ -29,8 +29,10 @@ class WholeTextFinderTest extends TestCase
         $needleWithoutNbsp = "Lawful basis for processing including basis of legitimate interest";
 
         $matches = WholeTextFinder::find($haystackWithNbsp, $needleWithoutNbsp, true, true, true);
+        $matches2 = WholeTextFinder::find($haystackWithNbsp, $needleWithoutNbsp, true, false, true);
 
         $this->assertCount(1, $matches);
+        $this->assertCount(1, $matches2);
     }
 
     /**

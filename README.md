@@ -20,7 +20,7 @@ $needle = "php";
 // 3 matches
 $matches = WholeTextFinder::find($haystack, $needle);
 
-// $matches will be:
+// $matches is equals to:
 //
 // array(3) {
 //    [0] =>
@@ -45,6 +45,45 @@ $matches = WholeTextFinder::find($haystack, $needle);
 //    int(32)
 //  }
 // }
+
+```
+
+There is also available a `findAndReplace` method:
+
+```php
+//..
+use Finder\WholeTextFinder;
+
+$haystack = 'Δύο παράγοντες καθόρισαν την αντίληψή μου για την Τενεσί Ουίλιαμς και τη σκηνική παρουσίαση των κειμένων: η Maria Britneva και η Annette Saddik, αφετέρου.';
+$needle = 'και';
+$replacement = 'test';
+
+$matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+// $matches is equals to:
+//
+// array(2) {
+//   ["replacement"]=>
+//   string(252) "Δύο παράγοντες καθόρισαν την αντίληψή μου για την Τενεσί Ουίλιαμς test τη σκηνική παρουσίαση των κειμένων: η Maria Britneva test η Annette Saddik, αφετέρου."
+//   ["occurrencies"]=>
+//   array(2) {
+//     [0]=>
+//     array(2) {
+//       [0]=>
+//       string(6) "και"
+//       [1]=>
+//       int(122)
+//     }
+//     [1]=>
+//     array(2) {
+//       [0]=>
+//       string(6) "και"
+//       [1]=>
+//       int(213)
+//     }
+//   }
+// } 
+//
 
 ```
 
