@@ -11,8 +11,7 @@ class WholeTextRegexEscaper
      */
     public static function escapeWholeTextPattern($needle)
     {
-        $escapedNeedle = preg_quote($needle);
-        $escapedNeedle = self::escapeRegularPattern($escapedNeedle);
+        $escapedNeedle = self::escapeRegularPattern($needle);
         $splittedNeedle = mb_str_split($escapedNeedle);
 
         $final = '';
@@ -81,6 +80,8 @@ class WholeTextRegexEscaper
      */
     public static function escapeRegularPattern($needle)
     {
+        $needle = preg_quote($needle);
+
         return str_replace("/", "\/", $needle);
     }
 }

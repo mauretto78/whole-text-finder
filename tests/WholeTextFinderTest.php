@@ -10,6 +10,45 @@ class WholeTextFinderTest extends TestCase
     /**
      * @test
      */
+    public function search_with_square_brackets()
+    {
+        $haystack  = "Text with [[square brackets]]";
+        $needle = "[[";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, false, false);
+
+        $this->assertCount(1, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_with_curly_brackets()
+    {
+        $haystack  = "Text with {{curly brackets}}";
+        $needle = "{{";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, false, false);
+
+        $this->assertCount(1, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_with_at_symbol()
+    {
+        $haystack  = "Text with @ symbol";
+        $needle = "@";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, false, false);
+
+        $this->assertCount(1, $matches);
+    }
+
+    /**
+     * @test
+     */
     public function search_in_texts_with_dates()
     {
         $haystackWithDate  = "21/06/2019";
