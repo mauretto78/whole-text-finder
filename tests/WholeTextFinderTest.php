@@ -36,6 +36,34 @@ class WholeTextFinderTest extends TestCase
     /**
      * @test
      */
+    public function search_with_and_symbol()
+    {
+        $haystack  = "Storage &amp; Handling:";
+
+        $needle = "&";
+        $matches = WholeTextFinder::find($haystack, $needle, false, false, false);
+
+        $this->assertCount(1, $matches);
+
+        $needle = "&";
+        $matches = WholeTextFinder::find($haystack, $needle, true, false, false);
+
+        $this->assertCount(1, $matches);
+
+        $needle = "&amp;";
+        $matches = WholeTextFinder::find($haystack, $needle, false, false, false);
+
+        $this->assertCount(1, $matches);
+
+        $needle = "&amp;";
+        $matches = WholeTextFinder::find($haystack, $needle, true, false, false);
+
+        $this->assertCount(0, $matches);
+    }
+
+    /**
+     * @test
+     */
     public function search_with_at_symbol()
     {
         $haystack  = "Text with @ symbol";
