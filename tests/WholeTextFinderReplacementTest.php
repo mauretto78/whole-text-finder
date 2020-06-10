@@ -42,4 +42,34 @@ class WholeTextFinderReplacementTest extends TestCase
 
         $this->assertEquals($expected, $matches['replacement']);
     }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_must_skip_matecat_ph_tags()
+    {
+        $haystack = "Si asistent për përvojën %{experience_name}, ti do të ndihmosh %{primary_host_name} ta përmirësojë edhe më shumë këtë përvojë.";
+        $needle = 'host';
+        $replacement = 'test';
+
+        $expected = $haystack;
+        $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_must_skip_matecat_html_tags()
+    {
+        $haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
+        $needle = 2;
+        $replacement = "test";
+
+        $expected = "Beauty -> test Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
+        $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
 }
