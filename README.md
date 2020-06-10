@@ -213,6 +213,7 @@ This method will automatically **exclude** from replace the following tags:
 - `br`
 - `bx`
 - `ex`
+- `hr`
 - `img`
 
 #### Matecat special tags
