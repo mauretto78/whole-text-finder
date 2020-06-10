@@ -87,4 +87,28 @@ class WholeTextTagTest extends TestCase
             '||||',
         ], $extract['/\|\|\|\|/']);
     }
+
+    /**
+     * @test
+     */
+    public function extract_br_tags()
+    {
+        $string = 'This is a simple string with <br /> tag.';
+
+        $extract = WholeTextTag::extract($string);
+
+        $this->assertCount(1, $extract);
+    }
+
+    /**
+     * @test
+     */
+    public function extract_bx_ex_tags()
+    {
+        $string = '<bx id="1" /> This is a simple string with bx and ex tag <ex id="1" />.';
+
+        $extract = WholeTextTag::extract($string);
+
+        $this->assertCount(2, $extract);
+    }
 }

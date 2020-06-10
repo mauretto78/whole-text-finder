@@ -13,7 +13,7 @@ class WholeTextTag
     {
         $map = [];
 
-        $regexes = array_merge(self::getMatecatRegexes(), self::getAllHTMLRegexes());
+        $regexes = array_merge(self::getMatecatRegexes(), self::getAllHTMLRegexes(), self::getAllSelfClosingHTMLRegexes());
 
         foreach ($regexes as $regex) {
             preg_match_all($regex, $string, $matches, PREG_PATTERN_ORDER);
@@ -58,7 +58,6 @@ class WholeTextTag
                 'bdo',
                 'blockquote',
                 'body',
-                'br',
                 'bx',
                 'button',
                 'canvas',
@@ -165,6 +164,27 @@ class WholeTextTag
 
         foreach ($htmlTags as $tagname) {
             $regexes[] = "#<\s*?$tagname\b[^>]*>(.*?)</$tagname\b[^>]*>#s";
+        }
+
+        return $regexes;
+    }
+
+    /**
+     * @return string[]
+     */
+    private static function getAllSelfClosingHTMLRegexes()
+    {
+        $regexes = [];
+
+        $htmlTags = [
+            'br',
+            'bx',
+            'ex',
+            'img',
+        ];
+
+        foreach ($htmlTags as $tagname) {
+            $regexes[] = "#(<\s*".$tagname."[^>]*)/\s*>#s";
         }
 
         return $regexes;

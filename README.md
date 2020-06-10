@@ -106,8 +106,6 @@ This method will automatically **exclude** from replace the following tags:
 - `bdo`
 - `blockquote`
 - `body`
-- `br`
-- `bx`
 - `button`
 - `canvas`
 - `caption`
@@ -126,7 +124,6 @@ This method will automatically **exclude** from replace the following tags:
 - `dl`
 - `dt`
 - `em`
-- `ex`
 - `embed`
 - `fieldset`
 - `figure`
@@ -146,7 +143,6 @@ This method will automatically **exclude** from replace the following tags:
 - `html`
 - `i`
 - `iframe`
-- `img`
 - `input`
 - `ins`
 - `kbd`
@@ -209,6 +205,13 @@ This method will automatically **exclude** from replace the following tags:
 - `var`
 - `video`
 - `wbr`
+
+#### HTML self-closing tags
+
+- `br`
+- `bx`
+- `ex`
+- `img`
 
 #### Matecat special tags
 
