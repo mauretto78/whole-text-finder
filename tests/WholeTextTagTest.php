@@ -93,11 +93,12 @@ class WholeTextTagTest extends TestCase
      */
     public function extract_br_tags()
     {
-        $string = 'This is a simple string with <br /> tag.';
+        $string = 'This is a simple string with <br/><br /> tag.';
 
         $extract = WholeTextTag::extract($string);
 
         $this->assertCount(1, $extract);
+        $this->assertCount(2, $extract['#(<\s*br[^>]*)/\s*>#s']);
     }
 
     /**
@@ -105,10 +106,22 @@ class WholeTextTagTest extends TestCase
      */
     public function extract_bx_ex_tags()
     {
-        $string = '<bx id="1" /> This is a simple string with bx and ex tag <ex id="1" />.';
+        $string = '<bx id="1" /> This is a simple string with bx and ex tag <ex id="1"/>.';
 
         $extract = WholeTextTag::extract($string);
 
         $this->assertCount(2, $extract);
+    }
+
+    /**
+     * @test
+     */
+    public function extract_mixed_bx_ex_tags()
+    {
+        $string = '<bx id="1" /> This is a simple <bx id="1">string</bx> with bx and ex tag <ex id="1" />.';
+
+        $extract = WholeTextTag::extract($string);
+
+        $this->assertCount(3, $extract);
     }
 }

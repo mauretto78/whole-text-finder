@@ -93,7 +93,6 @@ class WholeTextTag
                 'head',
                 'header',
                 'hgroup',
-                'hr',
                 'html',
                 'i',
                 'iframe',
@@ -180,6 +179,7 @@ class WholeTextTag
             'br',
             'bx',
             'ex',
+            'hr',
             'img',
         ];
 

@@ -107,6 +107,7 @@ This method will automatically **exclude** from replace the following tags:
 - `blockquote`
 - `body`
 - `button`
+- `bx`
 - `canvas`
 - `caption`
 - `cite`
@@ -125,6 +126,7 @@ This method will automatically **exclude** from replace the following tags:
 - `dt`
 - `em`
 - `embed`
+- `ex`
 - `fieldset`
 - `figure`
 - `footer`
