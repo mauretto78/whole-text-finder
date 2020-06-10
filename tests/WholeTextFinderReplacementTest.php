@@ -70,6 +70,8 @@ class WholeTextFinderReplacementTest extends TestCase
         $expected = "Beauty -> test Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
         $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 
+        var_dump($matches);
+
         $this->assertEquals($expected, $matches['replacement']);
     }
 }

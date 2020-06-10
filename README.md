@@ -48,6 +48,8 @@ $matches = WholeTextFinder::find($haystack, $needle);
 
 ```
 
+## Find and Replace
+
 There is also available a `findAndReplace` method:
 
 ```php
@@ -80,6 +82,164 @@ $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 //       string(6) "και"
 //       [1]=>
 //       int(213)
+//     }
+//   }
+// } 
+//
+
+```
+
+This method will **exclude** from replace the following tags:
+
+#### HTML tags
+
+- a
+- abbr
+- address
+- area
+- article
+- aside
+- audio
+- b
+- base
+- bdi
+- bdo
+- blockquote
+- body
+- br
+- bx
+- button
+- canvas
+- caption
+- cite
+- code
+- col
+- colgroup
+- data
+- datalist
+- dd
+- del
+- details
+- dfn
+- dialog
+- div
+- dl
+- dt
+- em
+- ex
+- embed
+- fieldset
+- figure
+- footer
+- form
+- g
+- h1
+- h2
+- h3
+- h4
+- h5
+- h6
+- head
+- header
+- hgroup
+- hr
+- html
+- i
+- iframe
+- img
+- input
+- ins
+- kbd
+- keygen
+- label
+- legend
+- li
+- link
+- main
+- map
+- mark
+- menu
+- menuitem
+- meta
+- meter
+- nav
+- noscript
+- object
+- ol
+- optgroup
+- option
+- output
+- p
+- param
+- ph
+- pre
+- q
+- rb
+- rp
+- rt
+- rtc
+- ruby
+- s
+- samp
+- script
+- section
+- select
+- small
+- source
+- span
+- strong
+- style
+- sub
+- summary
+- sup
+- table
+- tbody
+- td
+- template
+- textarea
+- tfoot
+- th
+- thead
+- time
+- title
+- tr
+- track
+- u
+- ul
+- var
+- video
+- wbr 
+
+#### Matecat special tags
+
+- ||||
+- %{\w*}
+
+So, for example:
+
+```php
+//..
+use Finder\WholeTextFinder;
+
+$haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
+        $needle = 2;
+        $replacement = "test";
+
+$matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+// $matches is equals to:
+//
+// array(2) {
+//   ["replacement"]=>
+//   string(252) "Beauty -> test Anti-Akne Gesichtsreiniger Schlankmacher <g id="2">XXX</g>"
+//   ["occurrencies"]=>
+//   array(1) {
+//    [0]=>
+//      array(2) {
+//        [0]=>
+//        string(1) "2"
+//        [1]=>
+//        int(10)
 //     }
 //   }
 // } 
