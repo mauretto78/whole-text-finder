@@ -15,10 +15,10 @@ class WholeTextTag
 
         $regexes = array_merge(self::getMatecatRegexes(), self::getAllHTMLRegexes());
 
-        foreach ($regexes as $regex){
+        foreach ($regexes as $regex) {
             preg_match_all($regex, $string, $matches, PREG_PATTERN_ORDER);
 
-            if(!empty($matches[0][0])){
+            if (!empty($matches[0][0])) {
                 $map[$regex] = $matches[0];
             }
         }
@@ -163,7 +163,7 @@ class WholeTextTag
                 'wbr',
         ];
 
-        foreach ($htmlTags as $tagname){
+        foreach ($htmlTags as $tagname) {
             $regexes[] = "#<\s*?$tagname\b[^>]*>(.*?)</$tagname\b[^>]*>#s";
         }
 

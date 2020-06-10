@@ -92,17 +92,70 @@ class WholeTextFinder
     {
         $patternAndHaystack = self::getPatternAndHaystack($haystack, $needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps);
 
+        $pattern = $patternAndHaystack['pattern'];
+        $haystack = $patternAndHaystack['haystack'];
 
-        $pattern = ltrim($patternAndHaystack['pattern'], $patternAndHaystack['pattern'][0]);
-        $p = "/(?!%{\w*}|ignoreme2|ignoremeN)" . $pattern;
+        $tags = WholeTextTag::extract($patternAndHaystack['haystack']);
 
-
-
-        $replacement = preg_replace($p, $replacement, $patternAndHaystack['haystack']);
+        $haystack = self::replaceTagsWithPlaceholder($tags, $haystack);
+        $replacement = preg_replace($pattern, $replacement, $haystack);
+        $replacement = self::replacePlaceholderWithTags($tags, $replacement);
 
         return [
             'replacement' => $replacement,
             'occurrencies' => self::find($haystack, $needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps),
         ];
+    }
+
+    /**
+     * @param array $tags
+     * @param string $haystack
+     *
+     * @return string
+     */
+    private static function replaceTagsWithPlaceholder($tags, $haystack)
+    {
+        if (count($tags) > 0) {
+            $counter = 0;
+            foreach ($tags as $matches) {
+                foreach ($matches as $match) {
+                    $haystack = str_replace($match, self::getPlaceholder($counter), $haystack);
+                    $counter++;
+                }
+            }
+        }
+
+        return $haystack;
+    }
+
+    /**
+     * @param array $tags
+     * @param string $replacement
+     *
+     * @return string
+     */
+    private static function replacePlaceholderWithTags($tags, $replacement)
+    {
+        if (count($tags) > 0) {
+            $counter = 0;
+            foreach ($tags as $matches) {
+                foreach ($matches as $match) {
+                    $replacement = str_replace(self::getPlaceholder($counter), $match, $replacement);
+                    $counter++;
+                }
+            }
+        }
+
+        return $replacement;
+    }
+
+    /**
+     * @param int $counter
+     *
+     * @return string
+     */
+    private static function getPlaceholder($counter)
+    {
+        return "{{{{XXXXXXXXXXX_".$counter."}}}}";
     }
 }

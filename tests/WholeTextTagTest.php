@@ -18,7 +18,7 @@ class WholeTextTagTest extends TestCase
         $extract = WholeTextTag::extract($string);
         $this->assertCount(1, $extract);
 
-        foreach ($extract as $regex => $matches){
+        foreach ($extract as $regex => $matches) {
             $this->assertEquals($regex, '/%{\w*}/');
             $this->assertEquals([
                     '%{experience_name}',
@@ -37,7 +37,7 @@ class WholeTextTagTest extends TestCase
         $extract = WholeTextTag::extract($string);
         $this->assertCount(1, $extract);
 
-        foreach ($extract as $regex => $matches){
+        foreach ($extract as $regex => $matches) {
             $this->assertEquals($regex, '#<\s*?g\b[^>]*>(.*?)</g\b[^>]*>#s');
             $this->assertEquals([
                     '<g id="2">XXX</g>',
@@ -55,7 +55,7 @@ class WholeTextTagTest extends TestCase
         $extract = WholeTextTag::extract($string);
         $this->assertCount(1, $extract);
 
-        foreach ($extract as $regex => $matches){
+        foreach ($extract as $regex => $matches) {
             $this->assertEquals($regex, '#<\s*?ph\b[^>]*>(.*?)</ph\b[^>]*>#s');
             $this->assertEquals([
                     '<ph id="1"> {1} </ph>',
@@ -88,7 +88,3 @@ class WholeTextTagTest extends TestCase
         ], $extract['/\|\|\|\|/']);
     }
 }
-
-
-
-
