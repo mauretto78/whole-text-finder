@@ -222,8 +222,8 @@ So, for example:
 use Finder\WholeTextFinder;
 
 $haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
-        $needle = 2;
-        $replacement = "test";
+$needle = 2;
+$replacement = "test";
 
 $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 
