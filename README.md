@@ -89,7 +89,7 @@ $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 
 ```
 
-This method will **exclude** from replace the following tags:
+This method will automatically **exclude** from replace the following tags:
 
 #### HTML tags
 
