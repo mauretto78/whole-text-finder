@@ -36,4 +36,28 @@ class WholeTextRegexEscaperTest extends TestCase
 
         $this->assertEquals($escaped, $expected);
     }
+
+    /**
+     * @test
+     */
+    public function get_the_whole_text_regex_with_cyrillic_words()
+    {
+        $string  = "Тест & Тестирование";
+        $escaped = WholeTextRegexEscaper::escapeWholeTextPattern($string);
+        $expected = "\\bТест & Тестирование\\b";
+
+        $this->assertEquals($escaped, $expected);
+    }
+
+    /**
+     * @test
+     */
+    public function get_the_whole_text_regex_with_greek_words()
+    {
+        $string  = "Χάρηκα πολύ";
+        $escaped = WholeTextRegexEscaper::escapeWholeTextPattern($string);
+        $expected = "\\bΧάρηκα πολύ\\b";
+
+        $this->assertEquals($escaped, $expected);
+    }
 }

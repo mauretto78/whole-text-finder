@@ -250,6 +250,60 @@ class WholeTextFinderTest extends TestCase
     /**
      * @test
      */
+    public function search_in_texts_with_cyrillic_words()
+    {
+        $haystackArray = [
+            'Тест и тест',
+            'Тест & Тестирование'
+        ];
+
+        // 1. not exact match, case insensitive
+        $matches = [];
+        $needle = 'тест';
+
+        foreach ($haystackArray as $haystack){
+            $matches[] = WholeTextFinder::find($haystack, $needle, true, false, false);
+        }
+
+        $this->assertCount(2, $matches[0]);
+        $this->assertCount(2, $matches[1]);
+
+        // 2. exact match, case insensitive
+        $matches = [];
+
+        foreach ($haystackArray as $haystack){
+            $matches[] = WholeTextFinder::find($haystack, $needle, true, true, false);
+        }
+
+        $this->assertCount(2, $matches[0]);
+        $this->assertCount(1, $matches[1]);
+
+        // 3. not exact match, case sensitive
+        $matches = [];
+        $needle = 'Тест';
+
+        foreach ($haystackArray as $haystack){
+            $matches[] = WholeTextFinder::find($haystack, $needle, true, false, true);
+        }
+
+        $this->assertCount(1, $matches[0]);
+        $this->assertCount(2, $matches[1]);
+
+        // 4. exact match, case sensitive
+        $matches = [];
+        $needle = 'Тест';
+
+        foreach ($haystackArray as $haystack){
+            $matches[] = WholeTextFinder::find($haystack, $needle, true, true, true);
+        }
+
+        $this->assertCount(1, $matches[0]);
+        $this->assertCount(1, $matches[1]);
+    }
+
+    /**
+     * @test
+     */
     public function search_in_texts_with_arabic_words()
     {
         $haystack = '. سعدت بلقائك.';
@@ -257,5 +311,31 @@ class WholeTextFinderTest extends TestCase
 
         $matches = WholeTextFinder::find($haystack, $needle, true, true);
         $this->assertCount(1, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_in_texts_with_greek_words()
+    {
+        $haystack = 'Χάρηκα πολύ';
+
+        $needle = 'Χάρηκα';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(1, $matches);
+
+        $needle = 'Χάρηκ';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(0, $matches);
+
+        $needle = 'Πολύ';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(1, $matches);
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+        $this->assertCount(0, $matches);
     }
 }
