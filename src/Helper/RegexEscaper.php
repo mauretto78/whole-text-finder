@@ -1,8 +1,8 @@
 <?php
 
-namespace Matecat\Finder;
+namespace Matecat\Finder\Helper;
 
-class WholeTextRegexEscaper
+class RegexEscaper
 {
     /**
      * @param string $needle
@@ -12,7 +12,7 @@ class WholeTextRegexEscaper
     public static function escapeWholeTextPattern($needle)
     {
         $escapedNeedle = self::escapeRegularPattern($needle);
-        $splittedNeedle = mb_str_split($escapedNeedle);
+        $splittedNeedle = Strings::split($escapedNeedle);
 
         $final = '';
 
@@ -70,9 +70,7 @@ class WholeTextRegexEscaper
      */
     private static function isBoundary($letter)
     {
-        $boundaryRegex = "/[\w]/iu";
-
-        return (preg_match($boundaryRegex, $letter) > 0) ? true : false;
+        return (preg_match("/[\w]/iu", $letter) > 0) ? true : false;
     }
 
     /**

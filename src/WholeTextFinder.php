@@ -2,6 +2,10 @@
 
 namespace Matecat\Finder;
 
+use Matecat\Finder\Helper\RegexEscaper;
+use Matecat\Finder\Helper\Strings;
+use Matecat\Finder\Helper\Tags;
+
 class WholeTextFinder
 {
     /**
@@ -36,8 +40,8 @@ class WholeTextFinder
     private static function getPatternAndHaystack($haystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
     {
         $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps);
-        $haystack = ($skipHtmlEntities) ? html_entity_decode($haystack, ENT_COMPAT, 'UTF-8') : $haystack;
-        $haystack = (false === $preserveNbsps) ? self::cutNbsps($haystack) : $haystack;
+        $haystack = ($skipHtmlEntities) ? Strings::htmlEntityDecode($haystack) : $haystack;
+        $haystack = (false === $preserveNbsps) ? Strings::cutNbsps($haystack) : $haystack;
 
         return [
             'pattern' => $pattern,
@@ -56,25 +60,16 @@ class WholeTextFinder
      */
     private static function getSearchPattern($needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
     {
-        $needle = (false === $preserveNbsps) ? self::cutNbsps($needle) : $needle;
+        $needle = (false === $preserveNbsps) ? Strings::cutNbsps($needle) : $needle;
+        $needle = ($skipHtmlEntities) ? Strings::htmlEntityDecode($needle) : $needle;
 
         $pattern = '/';
-        $pattern .= ($exactMatch) ? WholeTextRegexEscaper::escapeWholeTextPattern($needle) : WholeTextRegexEscaper::escapeRegularPattern($needle);
+        $pattern .= ($exactMatch) ? RegexEscaper::escapeWholeTextPattern($needle) : RegexEscaper::escapeRegularPattern($needle);
         $pattern .= '/';
         $pattern .= (false === $caseSensitive) ? 'i' : '';
         $pattern .= ($skipHtmlEntities) ? 'u' : '';
 
         return $pattern;
-    }
-
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
-    private static function cutNbsps($string)
-    {
-        return str_replace(['&nbsp;', ' '], ' ', $string);
     }
 
     /**
@@ -95,67 +90,14 @@ class WholeTextFinder
         $pattern = $patternAndHaystack['pattern'];
         $haystack = $patternAndHaystack['haystack'];
 
-        $tags = WholeTextTag::extract($patternAndHaystack['haystack']);
-
-        $haystack = self::replaceTagsWithPlaceholder($tags, $haystack);
+        $tags = Tags::extract($patternAndHaystack['haystack']);
+        $haystack = Tags::replaceTagsWithPlaceholder($tags, $haystack);
         $replacement = preg_replace($pattern, $replacement, $haystack);
-        $replacement = self::replacePlaceholderWithTags($tags, $replacement);
+        $replacement = Tags::replacePlaceholderWithTags($tags, $replacement);
 
         return [
             'replacement' => $replacement,
             'occurrencies' => self::find($haystack, $needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps),
         ];
-    }
-
-    /**
-     * @param array $tags
-     * @param string $haystack
-     *
-     * @return string
-     */
-    private static function replaceTagsWithPlaceholder($tags, $haystack)
-    {
-        if (count($tags) > 0) {
-            $counter = 0;
-            foreach ($tags as $matches) {
-                foreach ($matches as $match) {
-                    $haystack = str_replace($match, self::getPlaceholder($counter), $haystack);
-                    $counter++;
-                }
-            }
-        }
-
-        return $haystack;
-    }
-
-    /**
-     * @param array $tags
-     * @param string $replacement
-     *
-     * @return string
-     */
-    private static function replacePlaceholderWithTags($tags, $replacement)
-    {
-        if (count($tags) > 0) {
-            $counter = 0;
-            foreach ($tags as $matches) {
-                foreach ($matches as $match) {
-                    $replacement = str_replace(self::getPlaceholder($counter), $match, $replacement);
-                    $counter++;
-                }
-            }
-        }
-
-        return $replacement;
-    }
-
-    /**
-     * @param int $counter
-     *
-     * @return string
-     */
-    private static function getPlaceholder($counter)
-    {
-        return "{{{{XXXXXXXXXXX_".$counter."}}}}";
     }
 }

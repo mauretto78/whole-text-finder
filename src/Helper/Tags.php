@@ -1,8 +1,8 @@
 <?php
 
-namespace Matecat\Finder;
+namespace Matecat\Finder\Helper;
 
-class WholeTextTag
+class Tags
 {
     /**
      * @param string $string
@@ -188,5 +188,57 @@ class WholeTextTag
         }
 
         return $regexes;
+    }
+
+    /**
+     * @param array $tags
+     * @param string $haystack
+     *
+     * @return string
+     */
+    public static function replaceTagsWithPlaceholder($tags, $haystack)
+    {
+        if (count($tags) > 0) {
+            $counter = 0;
+            foreach ($tags as $matches) {
+                foreach ($matches as $match) {
+                    $haystack = str_replace($match, self::getPlaceholder($counter), $haystack);
+                    $counter++;
+                }
+            }
+        }
+
+        return $haystack;
+    }
+
+    /**
+     * @param array $tags
+     * @param string $replacement
+     *
+     * @return string
+     */
+    public static function replacePlaceholderWithTags($tags, $replacement)
+    {
+        if (count($tags) > 0) {
+            $counter = 0;
+            foreach ($tags as $matches) {
+                foreach ($matches as $match) {
+                    $replacement = str_replace(self::getPlaceholder($counter), $match, $replacement);
+                    $counter++;
+                }
+            }
+        }
+
+        return $replacement;
+    }
+
+    /**
+     * @param int $counter
+     *
+     * @return string
+     */
+    private static function getPlaceholder($counter)
+    {
+        return "{{{{XXXXXXXXXXX_".$counter."}}}}";
     }
 }

@@ -50,6 +50,11 @@ class WholeTextFinderTest extends TestCase
 
         $this->assertCount(1, $matches);
 
+        $needle = "&";
+        $matches = WholeTextFinder::find($haystack, $needle, false, true, false);
+
+        $this->assertCount(1, $matches);
+
         $needle = "&amp;";
         $matches = WholeTextFinder::find($haystack, $needle, false, false, false);
 
@@ -58,7 +63,7 @@ class WholeTextFinderTest extends TestCase
         $needle = "&amp;";
         $matches = WholeTextFinder::find($haystack, $needle, true, false, false);
 
-        $this->assertCount(0, $matches);
+        $this->assertCount(1, $matches);
     }
 
     /**
@@ -228,6 +233,18 @@ class WholeTextFinderTest extends TestCase
         $needle = "&quot;";
         $matches = WholeTextFinder::find($haystack, $needle, false);
         $this->assertCount(2, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_in_texts_with_ampersand()
+    {
+        $haystack = 'Тест &amp; Тестирование';
+        $needle = "Тест &amp; Тестирование";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(1, $matches);
     }
 
     /**
