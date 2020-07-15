@@ -21,7 +21,7 @@ class Strings
      */
     public static function htmlEntityDecode($string)
     {
-        return html_entity_decode($string, ENT_COMPAT, 'UTF-8');
+        return html_entity_decode($string, ENT_QUOTES|ENT_XHTML, 'UTF-8');
     }
 
     /**
