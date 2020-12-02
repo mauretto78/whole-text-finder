@@ -5,7 +5,7 @@ namespace Matecat\Finder\Helper;
 class Replacer
 {
     /**
-     * This method replaces content skipping html content.
+     * This method replaces content avoiding to replace html content.
      *
      * Example:
      * $haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
