@@ -63,12 +63,74 @@ class WholeTextFinderReplacementTest extends TestCase
      */
     public function find_and_replace_must_skip_matecat_html_tags()
     {
-        $haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
-        $needle = 2;
+        $haystack = "Beauty -> 0 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
+        $needle = 0;
         $replacement = "test";
 
         $expected = "Beauty -> test Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
         $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_inner_html_content()
+    {
+        $haystack = "Ciao questa è una stringa con <a href=\"#\">contenuto</a> dentro un tag HTML.";
+        $needle = 'contenuto';
+        $replacement = "test";
+
+        $expected = "Ciao questa è una stringa con <a href=\"#\">test</a> dentro un tag HTML.";
+        $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_with_hashtag()
+    {
+        $haystack = "Ciao questa è una stringa con ## <a href=\"#\">contenuto</a> dentro un tag HTML.";
+        $needle = '##';
+        $replacement = "test";
+
+        $expected = "Ciao questa è una stringa con test <a href=\"#\">contenuto</a> dentro un tag HTML.";
+        $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_with_ampersand()
+    {
+        $haystack  = "Storage &amp; Handling:";
+
+        $needle = "&";
+        $replacement = "e";
+
+        $expected = "Storage e Handling:";
+        $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_with_ampersand_and_case_sensitive()
+    {
+        $haystack  = "handling, Storage &amp; <p id='x' data-content='xxxx'>Handling</p>:";
+
+        $needle = "Handling";
+        $replacement = "XX";
+
+        $expected = "handling, Storage & <p id='x' data-content='xxxx'>XX</p>:";
+        $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement, true, false ,true);
 
         $this->assertEquals($expected, $matches['replacement']);
     }

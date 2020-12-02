@@ -4,7 +4,7 @@ namespace Matecat\Finder;
 
 use Matecat\Finder\Helper\RegexEscaper;
 use Matecat\Finder\Helper\Strings;
-use Matecat\Finder\Helper\Tags;
+use Matecat\Finder\Helper\Replacer;
 
 class WholeTextFinder
 {
@@ -86,14 +86,7 @@ class WholeTextFinder
     public static function findAndReplace($haystack, $needle, $replacement, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
     {
         $patternAndHaystack = self::getPatternAndHaystack($haystack, $needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps);
-
-        $pattern = $patternAndHaystack['pattern'];
-        $haystack = $patternAndHaystack['haystack'];
-
-        $tags = Tags::extract($patternAndHaystack['haystack']);
-        $haystack = Tags::replaceTagsWithPlaceholder($tags, $haystack);
-        $replacement = preg_replace($pattern, $replacement, $haystack);
-        $replacement = Tags::replacePlaceholderWithTags($tags, $replacement);
+        $replacement = Replacer::replace($patternAndHaystack['pattern'], $replacement, $patternAndHaystack['haystack']);
 
         return [
             'replacement' => $replacement,

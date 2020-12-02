@@ -33,4 +33,21 @@ class Strings
     {
         return mb_str_split($string);
     }
+
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    public static function token($length = 8)
+    {
+        $key = '';
+        $keys = array_merge(range(0, 9), range('a', 'z'));
+
+        for ($i = 0; $i < $length; $i++) {
+            $key .= $keys[array_rand($keys)];
+        }
+
+        return $key;
+    }
 }

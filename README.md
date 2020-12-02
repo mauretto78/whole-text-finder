@@ -89,137 +89,7 @@ $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 
 ```
 
-This method will automatically **exclude** from replace the following tags:
-
-#### HTML tags
-
-- `a`
-- `abbr`
-- `address`
-- `area`
-- `article`
-- `aside`
-- `audio`
-- `b`
-- `base`
-- `bdi`
-- `bdo`
-- `blockquote`
-- `body`
-- `button`
-- `bx`
-- `canvas`
-- `caption`
-- `cite`
-- `code`
-- `col`
-- `colgroup`
-- `data`
-- `datalist`
-- `dd`
-- `del`
-- `details`
-- `dfn`
-- `dialog`
-- `div`
-- `dl`
-- `dt`
-- `em`
-- `embed`
-- `ex`
-- `fieldset`
-- `figure`
-- `footer`
-- `form`
-- `g`
-- `h1`
-- `h2`
-- `h3`
-- `h4`
-- `h5`
-- `h6`
-- `head`
-- `header`
-- `hgroup`
-- `hr`
-- `html`
-- `i`
-- `iframe`
-- `input`
-- `ins`
-- `kbd`
-- `keygen`
-- `label`
-- `legend`
-- `li`
-- `link`
-- `main`
-- `map`
-- `mark`
-- `menu`
-- `menuitem`
-- `meta`
-- `meter`
-- `nav`
-- `noscript`
-- `object`
-- `ol`
-- `optgroup`
-- `option`
-- `output`
-- `p`
-- `param`
-- `ph`
-- `pre`
-- `q`
-- `rb`
-- `rp`
-- `rt`
-- `rtc`
-- `ruby`
-- `s`
-- `samp`
-- `script`
-- `section`
-- `select`
-- `small`
-- `source`
-- `span`
-- `strong`
-- `style`
-- `sub`
-- `summary`
-- `sup`
-- `table`
-- `tbody`
-- `td`
-- `template`
-- `textarea`
-- `tfoot`
-- `th`
-- `thead`
-- `time`
-- `title`
-- `tr`
-- `track`
-- `u`
-- `ul`
-- `var`
-- `video`
-- `wbr`
-
-#### HTML self-closing tags
-
-- `br`
-- `bx`
-- `ex`
-- `hr`
-- `img`
-
-#### Matecat special tags
-
-- `||||`
-- `%{\w*}`
+This method will automatically **exclude** from replace HTML and some Matecat special tags, but allows to replace the inner content inside HTML tags.
 
 So, for example:
 
@@ -227,6 +97,7 @@ So, for example:
 //..
 use Finder\WholeTextFinder;
 
+// Example 1
 $haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
 $needle = 2;
 $replacement = "test";
@@ -246,6 +117,31 @@ $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 //        string(1) "2"
 //        [1]=>
 //        int(10)
+//     }
+//   }
+// } 
+//
+
+// Example 2
+$haystack = "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
+$needle = 'XXX';
+$replacement = "test";
+
+$matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
+
+// $matches is equals to:
+//
+// array(2) {
+//   ["replacement"]=>
+//   string(252) "Beauty -> 2 Anti-Akne Gesichtsreiniger Schlankmacher <g id="2">test</g>"
+//   ["occurrencies"]=>
+//   array(1) {
+//    [0]=>
+//      array(2) {
+//        [0]=>
+//        string(1) "test"
+//        [1]=>
+//        int(55)
 //     }
 //   }
 // } 
