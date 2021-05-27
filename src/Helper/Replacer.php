@@ -28,14 +28,22 @@ class Replacer
     /**
      * Modifies regex pattern for avoiding replacement of html content
      *
+     * This function appends to the original $pattern a new optional regex.
+     *
+     * Example:
+     *
+     * /ciao/iu
+     *
+     * is converted to:
+     *
+     * /(\|\|\|\||<.*?>|%{.*?})(*SKIP)(*FAIL)|ciao/iu
+     *
      * @param $pattern
      *
      * @return string
      */
     private static function getModifiedRegexPattern($pattern)
     {
-        $explode = explode('/', $pattern);
-
-        return '/(\|\|\|\||<.*?>|%{.*?})(*SKIP)(*FAIL)|'.$explode[1].'/'.$explode[2];
+        return '/(\|\|\|\||<.*?>|%{.*?})(*SKIP)(*FAIL)|'. ltrim($pattern, $pattern[0]);
     }
 }
