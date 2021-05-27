@@ -134,4 +134,15 @@ class WholeTextFinderReplacementTest extends TestCase
 
         $this->assertEquals($expected, $matches['replacement']);
     }
+
+    /**
+     * @test
+     */
+    public function find_and_replace_a_slash()
+    {
+        $expected = 'ciao';
+        $matches = WholeTextFinder::findAndReplace( "/ ", "/ ", "ciao");
+
+        $this->assertEquals($expected, $matches['replacement']);
+    }
 }
