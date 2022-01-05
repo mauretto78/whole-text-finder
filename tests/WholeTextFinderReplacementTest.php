@@ -19,8 +19,8 @@ class WholeTextFinderReplacementTest extends TestCase
         $expected = [
             'replacement' => 'Δύο παράγοντες καθόρισαν την αντίληψή μου για την Τενεσί Ουίλιαμς test τη σκηνική παρουσίαση των κειμένων: η Maria Britneva test η Annette Saddik, αφετέρου.',
             'occurrencies' => [
-                [$needle, 122],
-                [$needle, 213],
+                [$needle, 66],
+                [$needle, 123],
             ],
         ];
         $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
@@ -64,7 +64,7 @@ class WholeTextFinderReplacementTest extends TestCase
     public function find_and_replace_must_skip_matecat_html_tags()
     {
         $haystack = "Beauty -> 0 Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
-        $needle = 0;
+        $needle = "0";
         $replacement = "test";
 
         $expected = "Beauty -> test Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";

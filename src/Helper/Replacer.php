@@ -14,9 +14,9 @@ class Replacer
      *
      * $expected = "Beauty -> test Anti-Akne Gesichtsreiniger Schlankmacher <g id=\"2\">XXX</g>";
      *
-     * @param $pattern
-     * @param $replacement
-     * @param $haystack
+     * @param string $pattern
+     * @param string $replacement
+     * @param string $haystack
      *
      * @return string|string[]
      */
@@ -38,7 +38,7 @@ class Replacer
      *
      * /(\|\|\|\||<.*?>|%{.*?})(*SKIP)(*FAIL)|ciao/iu
      *
-     * @param $pattern
+     * @param string $pattern
      *
      * @return string
      */
