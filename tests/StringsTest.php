@@ -17,4 +17,16 @@ class StringsTest extends TestCase
 
         $this->assertEquals(Strings::htmlEntityDecode($input), $output);
     }
+
+    /**
+     * @test
+     */
+    public function is_multibyte()
+    {
+        $string = "La casa e bella";
+        $string2 = "La casa è bella";
+
+        $this->assertFalse(Strings::isMultibyte($string));
+        $this->assertTrue(Strings::isMultibyte($string2));
+    }
 }

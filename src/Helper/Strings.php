@@ -50,4 +50,14 @@ class Strings
 
         return $key;
     }
+
+    /**
+     * @param string $string
+     *
+     * @return bool
+     */
+    public static function isMultibyte($string)
+    {
+        return ((strlen($string) - mb_strlen($string)) > 0);
+    }
 }

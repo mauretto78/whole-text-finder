@@ -24,7 +24,52 @@ class WholeTextFinder
 
         preg_match_all($patternAndHaystack['pattern'], $patternAndHaystack['haystack'], $matches, PREG_OFFSET_CAPTURE);
 
+        self::mbCorrectMatchPositions($patternAndHaystack['haystack'], $matches);
+
         return $matches[0];
+    }
+
+    /**
+     * Correct position for multi byte strings
+     *
+     * @param string $haystack
+     * @param array $matches
+     *
+     * @return mixed
+     */
+    private static function mbCorrectMatchPositions( $haystack, &$matches)
+    {
+        if(!Strings::isMultibyte($haystack) ){
+            return $matches[0];
+        }
+
+        foreach ($matches[0] as $index => $match){
+            $word = $match[0];
+            $position = $match[1];
+
+            $correctPosition = self::mbFindTheCorrectPosition($haystack, $word, $position);
+            $matches[0][$index][1] = $correctPosition;
+        }
+    }
+
+    /**
+     * @param string $haystack
+     * @param string $word
+     * @param int $position
+     *
+     * @return int
+     */
+    private static function mbFindTheCorrectPosition( $haystack, $word, &$position)
+    {
+        $wordCheck = mb_substr($haystack, $position, mb_strlen($word));
+
+        if($wordCheck !== $word){
+            $position = $position - 1;
+
+            self::mbFindTheCorrectPosition($haystack, $word, $position);
+        }
+
+        return $position;
     }
 
     /**

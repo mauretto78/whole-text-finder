@@ -10,6 +10,21 @@ class WholeTextFinderTest extends TestCase
     /**
      * @test
      */
+    public function can_detect_positions()
+    {
+        $haystack  = "La casa è bella bella";
+        $needle = "bella";
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+
+        $this->assertCount(2, $matches);
+        $this->assertEquals(10, $matches[0][1]);
+        $this->assertEquals(16, $matches[1][1]);
+    }
+
+    /**
+     * @test
+     */
     public function search_with_square_brackets()
     {
         $haystack  = "Text with [[square brackets]]";
@@ -138,17 +153,17 @@ class WholeTextFinderTest extends TestCase
         $expected = [
             [
                 0 => 'ggio',
-                1 => 23
+                1 => 22
             ]
         ];
         $expected2 = [
             [
                 0 => 'ggio',
-                1 => 18
+                1 => 17
             ],
             [
                 0 => 'ggio',
-                1 => 23
+                1 => 22
             ]
         ];
 

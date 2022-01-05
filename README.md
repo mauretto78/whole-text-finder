@@ -48,6 +48,35 @@ $matches = WholeTextFinder::find($haystack, $needle);
 
 ```
 
+### Multi bytes strings
+
+Please note that `WholeTextFinder::find` function is multi byte safe and returns the correct word positions in the original phrase. Take a look here:
+
+```php
+//..
+use Finder\WholeTextFinder;
+
+$haystack  = "La casa è bella bella";
+$needle = "bella";
+
+$matches = WholeTextFinder::find($haystack, $needle, true, true, true);
+
+// $matches is equals to:
+// array (
+//    0 =>
+//        array (
+//            0 => 'bella',
+//            1 => 10,
+//        ),
+//    1 =>
+//        array (
+//            0 => 'bella',
+//            1 => 16,
+//        ),
+//)
+
+```
+
 ## Find and Replace
 
 There is also available a `findAndReplace` method:
@@ -74,14 +103,14 @@ $matches = WholeTextFinder::findAndReplace($haystack, $needle, $replacement);
 //       [0]=>
 //       string(6) "και"
 //       [1]=>
-//       int(122)
+//       int(66)
 //     }
 //     [1]=>
 //     array(2) {
 //       [0]=>
 //       string(6) "και"
 //       [1]=>
-//       int(213)
+//       int(123)
 //     }
 //   }
 // } 
