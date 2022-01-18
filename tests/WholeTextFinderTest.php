@@ -238,7 +238,7 @@ class WholeTextFinderTest extends TestCase
 
         $needle = "<a";
         $matches = WholeTextFinder::find($haystack, $needle, true);
-        $this->assertCount(1, $matches);
+        $this->assertCount(0, $matches);
 
         $needle = "<A";
         $matches = WholeTextFinder::find($haystack, $needle, true, false, true);
@@ -246,7 +246,7 @@ class WholeTextFinderTest extends TestCase
 
         $needle = "<a";
         $matches = WholeTextFinder::find($haystack, $needle, true, true);
-        $this->assertCount(1, $matches);
+        $this->assertCount(0, $matches);
 
         $haystack  = "&quot;This is a quotation&quot; - says the donkey.";
 
@@ -386,5 +386,51 @@ class WholeTextFinderTest extends TestCase
 
         $matches = WholeTextFinder::find($haystack, $needle, true, true, true);
         $this->assertCount(0, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_with_password_random_strings()
+    {
+        $haystack = '[rxkRj$cPt<';
+
+        $needle = '[rxkRj$cPt<';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(1, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_with_html_tags()
+    {
+        $haystack = "handling, Storage & <p id='x' data-content='xxxx'>XX</p>:";
+
+        $needle = 'xxxx';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(0, $matches);
+    }
+
+    /**
+     * @test
+     */
+    public function search_with_g_tags()
+    {
+        $haystack = '<g id="1">Ciao</g>';
+
+        $needle = '"';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(0, $matches);
+
+        $haystack = '<g id="1">Ciao "</g>';
+
+        $needle = '"';
+
+        $matches = WholeTextFinder::find($haystack, $needle, true, true);
+        $this->assertCount(1, $matches);
     }
 }

@@ -20,7 +20,7 @@ class WholeTextFinder
      */
     public static function find($haystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
     {
-        $patternAndHaystack = self::getPatternAndHaystack($haystack, $needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps);
+        $patternAndHaystack = self::getPatternAndHaystack($haystack, $needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps, true);
 
         preg_match_all($patternAndHaystack['pattern'], $patternAndHaystack['haystack'], $matches, PREG_OFFSET_CAPTURE);
 
@@ -82,11 +82,15 @@ class WholeTextFinder
      *
      * @return array
      */
-    private static function getPatternAndHaystack($haystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false)
+    private static function getPatternAndHaystack($haystack, $needle, $skipHtmlEntities = true, $exactMatch = false, $caseSensitive = false, $preserveNbsps = false, $stripTags = false)
     {
         $pattern = self::getSearchPattern($needle, $skipHtmlEntities, $exactMatch, $caseSensitive, $preserveNbsps);
         $haystack = ($skipHtmlEntities) ? Strings::htmlEntityDecode($haystack) : $haystack;
         $haystack = (false === $preserveNbsps) ? Strings::cutNbsps($haystack) : $haystack;
+
+        if($stripTags){
+            $haystack = Strings::stripTags($haystack);
+        }
 
         return [
             'pattern' => $pattern,

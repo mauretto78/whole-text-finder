@@ -25,6 +25,156 @@ class Strings
     }
 
     /**
+     * @param $string
+     *
+     * @return string
+     */
+    public static function stripTags($string)
+    {
+        $tags = [
+            'a',
+            'abbr',
+            'acronym',
+            'address',
+            'applet',
+            'area',
+            'article',
+            'aside',
+            'audio',
+            'b',
+            'base',
+            'basefont',
+            'bdi',
+            'bdo',
+            'big',
+            'blockquote',
+            'body',
+            'br',
+            'button',
+            'bx',
+            'canvas',
+            'caption',
+            'center',
+            'cite',
+            'code',
+            'colgroup',
+            'data',
+            'datalist',
+            'dd',
+            'del',
+            'details',
+            'dfn',
+            'dialog',
+            'dir',
+            'div',
+            'dl',
+            'dt',
+            'embed',
+            'ex',
+            'fieldset',
+            'figcaption',
+            'figure',
+            'font',
+            'footer',
+            'form',
+            'frame',
+            'frameset',
+            'g',
+            'h1',
+            'head',
+            'header',
+            'hr',
+            'html',
+            'i',
+            'iframe',
+            'img',
+            'input',
+            'ins',
+            'kbd',
+            'label',
+            'legend',
+            'li',
+            'link',
+            'main',
+            'map',
+            'mark',
+            'meta',
+            'meter',
+            'nav',
+            'noframes',
+            'noscript',
+            'object',
+            'ol',
+            'optgroup',
+            'option',
+            'output',
+            'p',
+            'param',
+            'ph',
+            'picture',
+            'pre',
+            'progress',
+            'q',
+            'rp',
+            'rt',
+            'ruby',
+            's',
+            'samp',
+            'script',
+            'section',
+            'select',
+            'small',
+            'source',
+            'span',
+            'strong',
+            'style',
+            'sub',
+            'summary',
+            'sup',
+            'svg',
+            'table',
+            'tbody',
+            'td',
+            'template',
+            'textarea',
+            'tfoot',
+            'th',
+            'thead',
+            'time',
+            'title',
+            'tr',
+            'track',
+            'u',
+            'ul',
+            'var',
+            'video',
+            'wbr',
+        ];
+
+        foreach ($tags as $tag){
+            $regex = '/<'.$tag.'>|<'.$tag.' (.*)>|<\/'.$tag.'>|<'.$tag.'\/>/sU';
+
+            $string = preg_replace ($regex, ' ', $string);
+            $string = trim(preg_replace('/ {2,}/', ' ', $string));
+        }
+
+        return $string;
+    }
+
+    /**
+     * @param string $input
+     *
+     * @return bool
+     */
+    private static function isValidHtml($input)
+    {
+
+
+
+        $k = 333;
+    }
+
+    /**
      * @param string $string
      *
      * @return array|bool|string[]|null

@@ -48,6 +48,22 @@ $matches = WholeTextFinder::find($haystack, $needle);
 
 ```
 
+### HTML tags
+
+HTML Tags are completely skipped:
+
+```php
+//..
+use Finder\WholeTextFinder;
+
+$haystack  = '<a href="#" id="link">Hello</a>';
+$needle = "link";
+
+// no matches
+$matches = WholeTextFinder::find($haystack, $needle);
+
+```
+
 ### Multi bytes strings
 
 Please note that `WholeTextFinder::find` function is multi byte safe and returns the correct word positions in the original phrase. Take a look here:
