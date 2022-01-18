@@ -238,7 +238,7 @@ class WholeTextFinderTest extends TestCase
 
         $needle = "<a";
         $matches = WholeTextFinder::find($haystack, $needle, true);
-        $this->assertCount(0, $matches);
+        $this->assertCount(1, $matches);
 
         $needle = "<A";
         $matches = WholeTextFinder::find($haystack, $needle, true, false, true);
@@ -246,7 +246,7 @@ class WholeTextFinderTest extends TestCase
 
         $needle = "<a";
         $matches = WholeTextFinder::find($haystack, $needle, true, true);
-        $this->assertCount(0, $matches);
+        $this->assertCount(1, $matches);
 
         $haystack  = "&quot;This is a quotation&quot; - says the donkey.";
 
@@ -411,7 +411,7 @@ class WholeTextFinderTest extends TestCase
         $needle = 'xxxx';
 
         $matches = WholeTextFinder::find($haystack, $needle, true, true);
-        $this->assertCount(0, $matches);
+        $this->assertCount(1, $matches);
     }
 
     /**

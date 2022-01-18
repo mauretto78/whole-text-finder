@@ -36,18 +36,13 @@ class StringsTest extends TestCase
     public function strip_tags()
     {
         $string = '[rxkRj$cPt<';
-        $string2 = '<a href="#">Ciao</a>';
         $string3 = '<g id="123">Ciao</g>';
-        $string4 = 'Ciao<br>';
-        $string5 = 'Ciao<br/>';
         $string6 = '4n||6a8v:E]J}(t&m';
         $string7 = '3pWi<\FLpbVB%@>Yy@.8';
 
         $this->assertEquals('[rxkRj$cPt<', Strings::stripTags($string));
-        $this->assertEquals('Ciao', Strings::stripTags($string2));
+
         $this->assertEquals('Ciao', Strings::stripTags($string3));
-        $this->assertEquals('Ciao', Strings::stripTags($string4));
-        $this->assertEquals('Ciao', Strings::stripTags($string5));
         $this->assertEquals('4n||6a8v:E]J}(t&m', Strings::stripTags($string6));
         $this->assertEquals('3pWi<\FLpbVB%@>Yy@.8', Strings::stripTags($string7));
     }
