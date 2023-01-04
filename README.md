@@ -1,8 +1,8 @@
 # WholeTextFinder
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b9c1cf5c3f014285b5d7748cb4175c69)](https://www.codacy.com/app/mauretto78_2/whole-text-finder?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mauretto78/whole-text-finder&amp;utm_campaign=Badge_Grade)
 [![license](https://img.shields.io/github/license/matecat/whole-text-finder.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/matecat/whole-text-finder.svg)]()
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/matecat/whole-text-finder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/matecat/whole-text-finder/?branch=master)
 
 **WholeTextFinder** is a simple whole text finder.
 
